@@ -13,6 +13,9 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static("public")) // On frontend, script src="/path_relative_to_public_folder"
 
+// Set counter for customer ID
+let customerID = 0;
+
 // Data
 const reservations = [
   {
@@ -82,14 +85,15 @@ app.get("/api/waitlist", function (req, res) {
 app.post("/api/reservations", function(req, res){
   // Declare new variables
   var newReservation = req.body;
-
   const newTable = {
     customerName: newReservation.customerName,
     phoneNumber: newReservation.phoneNumber,
     customerEmail: newReservation.customerEmail,
-    customerID: newReservation.customerID
+    customerID: customerID
   }
-
+  // Increment counter
+  customerID +=1;
+  
   // Push newTable to reservations if not full - return true, else push to waitlist - return false
   if (reservations.length < 5) {
     // Add newTable to the reservations
