@@ -35,10 +35,10 @@ $.get("/api/waitlist/", function(response) {
         //setting values
             let number = i + 1;
             tableNumber.text(`Table #${number}`);
-            name.text(`Customer Name: ${response.customerName}`);
-            phone.text(`Phone Number: ${response.phoneNumber}`);
-            email.text(`Email: ${response.customerEmail}`);
-            id.text(`Customer ID: ${response.customerID}`);
+            name.text(`Customer Name: ${response[i].customerName}`);
+            phone.text(`Phone Number: ${response[i].phoneNumber}`);
+            email.text(`Email: ${response[i].customerEmail}`);
+            id.text(`Customer ID: ${response[i].customerID}`);
         //appending values to div
             container.append(tableNumber);
             container.append(hr);
