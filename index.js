@@ -20,6 +20,24 @@ const reservations = [
     "phoneNumber": "235643",
     "customerEmail": "sdghf@sdfg.com",
     "customerID": "125364375"
+  },
+  {
+    "customerName": "qwetyr",
+    "phoneNumber": "235643",
+    "customerEmail": "sdghf@sdfg.com",
+    "customerID": "125364375"
+  },
+  {
+    "customerName": "qwetyr",
+    "phoneNumber": "235643",
+    "customerEmail": "sdghf@sdfg.com",
+    "customerID": "125364375"
+  },
+  {
+    "customerName": "qwetyr",
+    "phoneNumber": "235643",
+    "customerEmail": "sdghf@sdfg.com",
+    "customerID": "125364375"
   }
 ];
 
@@ -37,7 +55,7 @@ const waitlist = [
 
 // Get requests to display pages
 app.get("/", function (req, res) {
-  res.sendFile(path.join(__dirname, "index.html"));
+  res.sendFile(path.join(__dirname, "home.html"));
 });
 
 app.get("/tables", function (req, res) {
@@ -62,7 +80,7 @@ app.get("/api/waitlist", function (req, res) {
 
 // Make a post request - takes in JSON input
 app.post("/api/reservations", function(req, res){
-  // 
+  // Declare new variables
   var newReservation = req.body;
 
   const newTable = {
@@ -71,14 +89,19 @@ app.post("/api/reservations", function(req, res){
     customerEmail: newReservation.customerEmail,
     customerID: newReservation.customerID
   }
-  console.log(newTable);
 
-  // Add array to the reservations
-  reservations.push(newTable);
-
-  // Send response to the client
-  // res.json(newReservation);
-  res.json(reservations);
+  // Push newTable to reservations if not full - return true, else push to waitlist - return false
+  if (reservations.length < 5) {
+    // Add newTable to the reservations
+    reservations.push(newTable);
+    // Tell client they got a table
+    return res.send(true);
+  } else {
+    // add newTable to waitlist
+    waitlist.push(newTable);
+    // Tell client they are on the waitlist :(
+    return res.send(false);
+  }
 })
 
 // Starts the server to begin listening
